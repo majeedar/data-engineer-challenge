@@ -4,7 +4,7 @@
 
 **Simple Flow:**
 ```
-IoT Sensors → Azure IoT Hub → Event Hubs → Azure Databricks → Delta Lake (Bronze/Silver/Gold) → Power BI + APIs
+IoT Sensors → Azure IoT Hub → Event Hubs → Azure Databricks → Delta Lake (Bronze/Silver/Gold) →  APIs
                                                                                                           ↓
                                                                   Power Platform (Power Automate + SharePoint + Chatbot)
                                                                                           ↓
@@ -24,8 +24,7 @@ IoT Sensors → Azure IoT Hub → Event Hubs → Azure Databricks → Delta Lake
 - **Delta Lake** - ACID transactions on data lake
 - **Azure Databricks** - Unified data processing (ingestion + transformation)
 
-### Analytics Layer
-- **Power BI** - Dashboards
+### Data access Layer
 - **Azure API Management** - REST APIs
 - **Azure Functions** - API backends
 
@@ -36,7 +35,7 @@ IoT Sensors → Azure IoT Hub → Event Hubs → Azure Databricks → Delta Lake
 - **Azure OpenAI + RAG** - Intelligent answers
 - **Azure DevOps** - Ticket tracking
 
-### Monitoring
+### Monitoring Layer
 - **Azure Monitor** - Infrastructure health
 - **Databricks Workflows** - Job orchestration
 - **Great Expectations** - Data quality
@@ -51,7 +50,6 @@ IoT Sensors → Azure IoT Hub → Event Hubs → Azure Databricks → Delta Lake
 
 **Environments:** Dev → Staging → Production via CI/CD
 
-**Timeline:** 30-45 minutes initial deployment
 
 ---
 
@@ -94,52 +92,3 @@ IoT Sensors → Azure IoT Hub → Event Hubs → Azure Databricks → Delta Lake
 - Sends confirmation, tracks SLA, updates customer
 - Auto-resolves common issues from SharePoint knowledge base
 
-**SLA:** Critical (1h), High (4h), Medium (1d), Low (2d)
-
----
-
-## Cost Estimate
-
-**Small (100 sensors): ~$500/month**
-- Azure services: $450
-- Power Platform: Included in Microsoft 365
-
-**Medium (10K sensors): ~$3,200/month**
-- Azure services: $3,000
-- Power Platform: Included in Microsoft 365
-
----
-
-## Timeline
-
-- **Week 1:** Infrastructure setup
-- **Week 2:** Data pipeline (Bronze/Silver/Gold)
-- **Week 3:** Power BI, APIs, Power Automate workflows
-- **Week 4:** AI chatbot, testing, go-live
-
-**Total: 4 weeks to production**
-
----
-
-## Key Benefits
-
-- **Scalable:** 100 to 1M sensors
-- **Cost-efficient:** Auto-scaling, pay-per-use
-- **Automated:** 90% customer communication via Power Platform
-- **AI-powered:** RAG chatbot reduces tickets by 60-70%
-- **Microsoft ecosystem:** Unified platform, familiar tools
-- **Simple:** Single data platform (Databricks), single communication platform (Power Platform)
-
----
-
-## Why This Works
-
-**Databricks:** Handles all data processing (ingestion + transformation)
-
-**Delta Lake:** Database features on cheap storage
-
-**Power Platform:** Automates customer communication (reports, chatbot, tickets)
-
-**Proven stack:** Industry-standard tools, minimal custom code
-
-**Fast delivery:** 4 weeks to production, iterate based on usage
