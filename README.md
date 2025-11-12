@@ -359,7 +359,7 @@ ORDER BY sensor_id;
 
 ---
 ---------------------------------------------------------------------------
-# SOLUION PART TWO : Cloud Solution Design - Concise Plan
+# SOLUTION PART TWO : Cloud Solution Design - Concise Plan
 --------------------------------------------------
 ## Architecture
 
