@@ -1,0 +1,65 @@
+version: '3.7'
+
+services:
+  mqtt_broker:
+    image: eclipse-mosquitto:2
+    volumes:
+      - ./config/:/mosquitto/config/:ro
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+  iot_data_generator:
+    build: ./iot_data_generator
+    environment:
+      - MQTT_HOST=mqtt_broker
+      - MQTT_PORT=1883
+      - MQTT_TOPIC=sensors
+      - INTERVAL_MS=1000
+      - LOGGING_LEVEL=20
+      - TZ=Europe/Berlin  # indicate the time zone
+    depends_on:
+      - mqtt_broker
+
+  # Data Ingestion Service 
+  data_ingestion:
+    build: ./data_ingestion
+    container_name: data_ingestion
+    depends_on:
+      - mqtt_broker
+      - timescaledb
+    environment:
+      - MQTT_HOST=mqtt_broker
+      - MQTT_PORT=1883
+      - DB_HOST=timescaledb
+      - DB_PORT=5432
+      - DB_NAME=sensors
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+    volumes:
+      - ./data_storage:/data
+    restart: unless-stopped
+
+  # TimescaleDB for queryable storage 
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    container_name: timescaledb
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: sensors
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+volumes:
+  data: ~
+  timescale_data:
